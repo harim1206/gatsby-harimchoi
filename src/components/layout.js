@@ -10,43 +10,50 @@ const TemplateWrapper = ({ children }) => {
   const [showMenu, setShowMenu] = useState(false);
   return (
     <StaticQuery
-      query={graphql`
-        query LayoutQuery {
-          datoCmsSite {
-            globalSeo {
-              siteName
-            }
-            faviconMetaTags {
-              ...GatsbyDatoCmsFaviconMetaTags
-            }
-          }
-          datoCmsHome {
-            seoMetaTags {
-              ...GatsbyDatoCmsSeoMetaTags
-            }
-            introTextNode {
-              childMarkdownRemark {
-                html
+
+      query = {
+        graphql`
+          query LayoutQuery {
+             datoCmsSite {
+              globalSeo {
+                siteName
+              }
+              faviconMetaTags {
+                ...GatsbyDatoCmsFaviconMetaTags
               }
             }
-            copyright
-          }
-          allDatoCmsSocialProfile(sort: { fields: [position], order: ASC }) {
-            edges {
-              node {
-                profileType
-                url
+            datoCmsHome {
+              seoMetaTags {
+                ...GatsbyDatoCmsSeoMetaTags
+              }
+              introTextNode {
+                childMarkdownRemark {
+                  html
+                }
+              }
+              copyright
+            }
+            allDatoCmsSocialProfile(sort: { fields: [position], order: ASC }) {
+              edges {
+                node {
+                  profileType
+                  url
+                }
               }
             }
           }
-        }
-      `}
+        `
+      }
+
       render={data => (
         <div className={`container ${showMenu ? "is-open" : ""}`}>
+          <h1> hello world </h1>
+
           <HelmetDatoCms
             favicon={data.datoCmsSite.faviconMetaTags}
             seo={data.datoCmsHome.seoMetaTags}
           />
+          
           <div className="container__sidebar">
             <div className="sidebar">
               <h6 className="sidebar__title">
@@ -84,6 +91,7 @@ const TemplateWrapper = ({ children }) => {
               </div>
             </div>
           </div>
+          
           <div className="container__body">
             <div className="container__mobile-header">
               <div className="mobile-header">
@@ -101,8 +109,10 @@ const TemplateWrapper = ({ children }) => {
                 </div>
               </div>
             </div>
+            
             {children}
           </div>
+        
         </div>
       )}
     />
